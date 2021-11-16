@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--mybatis的主配置文件，主要定义了数据库的配置信息、sql映射文件的位置-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd"><!--约束文件mybatis-3-config.dtd-->
+<configuration><!--根标签-->
+    <!--以下为环境配置，即数据库连接信息-->
+    <!--使用配置文件配置数据库连接信息-->
+    <properties resource="jdbc.properties"></properties>
+
+    <!--配置mybatis全局行为-->
+    <settings>
+        <!--配置输出日志-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    
+    <!--给自定义类起别名-->
+    <typeAliases>
+        <!--<typeAlias type="com.cdtangmin.entity.Student" alias="stu" />-->
+        <package name="com.cdtangmin.entity"/>
+    </typeAliases>
+
+    <!--default必须和某个environment的id值一样，告诉mybatis访问哪个数据库-->
+    <environments default="development">
+
+        <!--environment表示一个数据库的信息配置，id表示环境的名称，唯一值，可以自定义-->
+        <environment id="development">
+
+            <!--transactionManager表示事务类型，type：JDBC，表示使用jdbc中的Connection对象的commit,rollback做事务处理-->
+            <transactionManager type="JDBC"/>
+
+            <!--dataSource表示数据源，连接数据库用的，type表示数据源的类型，POOLED表示使用连接池-->
+            <dataSource type="POOLED">
+
+                <!--driver,url,username,password是固定的，不能自定义-->
+                <property name="driver" value="${jdbc.driver}"/><!--数据库驱动的类名-->
+                <property name="url" value="${jdbc.url}"/><!--连接数据库的url字符串-->
+                <property name="username" value="${jdbc.username}"/><!--访问数据库的用户名-->
+                <property name="password" value="${jdbc.password}"/><!--密码-->
+            </dataSource>
+
+        </environment>
+
+    </environments>
+
+    <mappers>
+        <!--一个mapper标签指定一个文件的位置，从类路径开始，即target/classes下面的路径-->
+        <mapper resource="com/cdtangmin/dao/StudentDao.xml"/>
+    </mappers>
+
+</configuration>
+

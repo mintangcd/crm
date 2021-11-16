@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdtangmin.dao.StudentDao">
+    <select id="selectStudents" parameterType="int" resultType="com.cdtangmin.entity.Student">
+        select * from t_student order by id
+    </select>
+
+    <sql id="one">/*sql代码片段复用*/
+        id,name,email,age
+    </sql>
+   <!-- <select id="selectStudents" parameterType="int" resultType="com.cdtangmin.entity.Student">
+        select <include refid="one" /> from t_student order by id
+    </select>-->
+
+    <!--插入操作-->
+    <insert id="insertStudent">
+        insert into t_student values(#{id},#{name},#{email},#{age})
+    </insert>
+    <!--if标签的使用-->
+    <!--<select id="selectStudents" parameterType="int" resultType="com.cdtangmin.entity.Student">
+        select id,name,email,age from t_student where
+            <if test="name !=null and name !=''">name = #{name}</if>
+            <if test="age>18">or age = #{age}</if>
+    </select>-->
+
+    <!--where标签的使用-->
+    <!--<select id="selectStudents" parameterType="int" resultType="com.cdtangmin.entity.Student">
+        select id,name,email,age from t_student
+            <where>
+                <if test="name !=null and name !=''">name = #{name}</if>
+                <if test="age>18">or age = #{age}</if>
+            </where>
+    </select>-->
+
+    <!--foreach标签的使用-->
+    <!--<select id="selectStudents" parameterType="int" resultType="com.cdtangmin.entity.Student">
+        select <include refid="one" /> from t_student where id in
+        <foreach collection="list" item="myId" open="(" close=")" separator="," >
+           #{myId}
+        </foreach>
+    </select>-->
+
+
+</mapper>
